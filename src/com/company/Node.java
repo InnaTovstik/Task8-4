@@ -6,7 +6,9 @@ public class Node {
     private Node next;
     private Node previous;
 
-
+    public Node(String value) {
+        this.value = value;
+    }
 
     public String getValue() {
         return value;
