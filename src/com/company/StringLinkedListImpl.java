@@ -81,9 +81,12 @@ class StringLinkedListImpl implements StringLinkedList {
             addLast(s);
         } else {
             Node current = findNode(index);
+            Node prev = current.getPrevious();
             Node newNode = new Node(s);
-            newNode.setNext(current.getNext());
-            current.setNext(newNode);
+            newNode.setNext(current);
+            newNode.setPrevious(current.getPrevious());
+            current.setPrevious(newNode);
+            prev.setNext(newNode);
             reWriteIndex();
         }
     }
@@ -165,7 +168,7 @@ class StringLinkedListImpl implements StringLinkedList {
             last = null;
             return null;
         } else {
-            last = findNode(last.getIndex() - 2);
+            last = last.getPrevious();
             last.setNext(null);
         }
         return last.getValue();
