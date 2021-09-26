@@ -9,8 +9,8 @@ public class Main {
             list.add("aaa", 0);
             list.add("bbb", 1);
             list.add("zzz", 2);
-
             System.out.println(list);
+
 
             list.addFirst("ccc");
             System.out.println("Добавили строку \"ccc\" в начало списка. " + list);
@@ -24,7 +24,7 @@ public class Main {
             System.out.println("Удaлили последний элемент. " + list);
 //            list.remove(2);
 //            System.out.println("Удалили элемент по 2 индексу. " + list);
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException | NullPointerException e) {
             e.printStackTrace();
         }
     }

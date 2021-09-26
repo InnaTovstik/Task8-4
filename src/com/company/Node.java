@@ -1,12 +1,15 @@
 package com.company;
 
 public class Node {
+
+
     private String value;
     private int index;
     private Node next;
     private Node previous;
 
-    public Node() {
+    public Node(String value) {
+        this.value = value;
     }
 
     public String getValue() {

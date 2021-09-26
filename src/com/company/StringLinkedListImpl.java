@@ -9,7 +9,7 @@ class StringLinkedListImpl implements StringLinkedList {
         if (index < 0 || index > size()) {
             throw new IndexOutOfBoundsException();
         }
-        if (index < size()/2) {
+        if (index < size() / 2) {
             Node current = first;
             for (int i = 0; i < index; i++)
                 current = current.getNext();
@@ -23,12 +23,12 @@ class StringLinkedListImpl implements StringLinkedList {
     }
 
     private void reWriteIndex() {
-        int size = size();
         Node node = first;
-        for (int i = 0; i < size; i++) {
-          System.out.println("i = " + i);
-           node.setIndex(i);
-           node = node.getNext();
+        int index = 0;
+        while (index < size()) {
+            node.setIndex(index);
+            node = node.getNext();
+            index++;
         }
     }
 
@@ -54,54 +54,49 @@ class StringLinkedListImpl implements StringLinkedList {
     @Override
     public void addFirst(String s) {
 
-        Node newNode = new Node();
+        Node newNode = new Node(s);
         if (first != null) {
             Node oldFirstNode = first;
             oldFirstNode.setPrevious(newNode);
             newNode.setNext(oldFirstNode);
-            newNode.setValue(s);
-            oldFirstNode.setPrevious(newNode);
             first = newNode;
+            reWriteIndex();
         } else {
             newNode.setNext(null);
             newNode.setPrevious(null);
-            newNode.setValue(s);
             first = newNode;
             last = newNode;
+            first.setIndex(0);
+            last.setIndex(0);
         }
-        newNode.setIndex(0);
-       //reWriteIndex();
     }
 
     @Override
     public void add(String s, int index) throws IndexOutOfBoundsException {
         if (index == 0) {
             addFirst(s);
-        } else if (index < 0 || index > last.getIndex() + 1) {
+        } else if (index < 0 || index > size()) {
             throw new IndexOutOfBoundsException();
-        } else if (index == last.getIndex() + 1) {
+        } else if (index == size()) {
             addLast(s);
         } else {
-            Node newNode = new Node();
             Node current = findNode(index);
-            newNode.setValue(s);
+            Node newNode = new Node(s);
             newNode.setNext(current.getNext());
             current.setNext(newNode);
-            current.setIndex(index);
-            //reWriteIndex();
+            reWriteIndex();
         }
     }
 
     @Override
     public void addLast(String s) {
-        Node newNode = new Node();
-        if (first == null) {
+        if (last == null) {
             addFirst(s);
         } else {
+            Node newNode = new Node(s);
             last.setNext(newNode);
             newNode.setPrevious(last);
-            newNode.setValue(s);
-            newNode.setIndex(size() + 1);
+            newNode.setIndex(last.getIndex() + 1);
             last = newNode;
         }
     }
@@ -136,7 +131,7 @@ class StringLinkedListImpl implements StringLinkedList {
             last = null;
             return null;
         } else {
-            first.setValue(get(1));
+            first = first.getNext();
             first.setPrevious(null);
             reWriteIndex();
         }
@@ -172,14 +167,23 @@ class StringLinkedListImpl implements StringLinkedList {
         } else {
             last = findNode(last.getIndex() - 2);
             last.setNext(null);
-
         }
         return last.getValue();
     }
 
     @Override
     public int size() {
-        return last.getIndex() + 1;
+        if (first == null || last == null) {
+            return 0;
+        } else {
+            int size = 1;
+            Node node = first;
+            while (node.getNext() != null) {
+                node = node.getNext();
+                size++;
+            }
+            return size;
+        }
     }
 }
 
