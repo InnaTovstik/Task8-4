@@ -147,20 +147,20 @@ class StringLinkedListImpl implements StringLinkedList {
         if (i < 0 || i > last.getIndex()) {
             throw new IllegalArgumentException();
         }
-        Node prev = findNode(i - 1);
-        Node curr = findNode(i);
-        if (i == 0 || last.getIndex() == 0) {
+        if (i == 0 || size() == 1) {
             return removeFirst();
-        } else if (i == last.getIndex() - 1) {
+        } else if (i == size() - 1) {
             return removeLast();
         }
-        prev.setNext(curr.getNext());
-        prev = curr;
-        curr = prev.getNext();
+        Node curr = findNode(i);
+        String valueCurrent = curr.getValue();
+        Node prev = curr.getPrevious();
+        Node next = curr.getNext();
+        prev.setNext(next);
+        next.setPrevious(prev);
         reWriteIndex();
-        return curr.getValue();
+        return valueCurrent;
     }
-
 
     @Override
     public String removeLast() {
@@ -169,10 +169,11 @@ class StringLinkedListImpl implements StringLinkedList {
             last = null;
             return null;
         } else {
+            String lastValue = last.getValue();
             last = last.getPrevious();
             last.setNext(null);
+            return lastValue;
         }
-        return last.getValue();
     }
 
     @Override

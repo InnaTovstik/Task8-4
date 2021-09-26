@@ -21,8 +21,8 @@ public class Main {
             System.out.println("Удалили первый элемент - " + element + ".  " + list);
             String element1 = list.removeLast();
             System.out.println("Удaлили последний элемент - " + element1 + ".  " + list);
-            String element3 = list.remove(2);
-            System.out.println("Удалили элемент по 2 индексу - " + element3 + ".  " +  list);
+            String element2 = list.remove(2);
+            System.out.println("Удалили элемент по 2 индексу - " + element2 + ".  " +  list);
         } catch (IndexOutOfBoundsException | NullPointerException e) {
             e.printStackTrace();
         }
