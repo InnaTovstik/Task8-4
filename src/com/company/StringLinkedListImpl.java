@@ -134,11 +134,12 @@ class StringLinkedListImpl implements StringLinkedList {
             last = null;
             return null;
         } else {
+            String firstValue = first.getValue();
             first = first.getNext();
             first.setPrevious(null);
             reWriteIndex();
+            return firstValue;
         }
-        return first.getValue();
     }
 
     @Override
